@@ -1,6 +1,6 @@
 ' Usage: csv_addbom.vbs file.csv
 ' Notes:
-' 必須要有initial.csv檔案放在同一個目錄
+' 必須要有initial.csv檔案放在同一個目錄(內含BOM)
 ' this isn't suitable for large files unless you have a lot of memory - ADODB.Stream reads the entire file into
 ' memory, then builds the output buffer in memory as well. #stupid
 
