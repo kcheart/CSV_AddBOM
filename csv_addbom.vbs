@@ -6,7 +6,7 @@
 
  
 If WScript.Arguments.Count <> 1 Then
-WScript.Echo "Usage: ukik_addbom.vbs file.csv"
+WScript.Echo "Usage: csv_addbom.vbs file.csv"
 WScript.Quit
 End If
  
