@@ -1,11 +1,11 @@
-' Usage: ukik_addbom_v2.vbs file.csv
+' Usage: csv_addbom_v2.vbs file.csv
 ' Notes:
 ' this isn't suitable for large files unless you have a lot of memory - ADODB.Stream reads the entire file into
 ' memory, then builds the output buffer in memory as well. #stupid
 
  
 If WScript.Arguments.Count <> 1 Then
-WScript.Echo "Usage: csv_addbom.vbs file.csv"
+WScript.Echo "Usage: csv_addbom_v2.vbs file.csv"
 WScript.Quit
 End If
  
@@ -50,14 +50,14 @@ Function MultiByteToBinary(MultiByte)
     ' MultiByteToBinary converts multibyte string To real binary data (VT_UI1 | VT_ARRAY)
     ' Using recordset
     Dim RS, LMultiByte, Binary
-    Const adLongVarBinary = 205
+    Const adLongVarBinary = 205  'ADO data type: OLEObject
     Set RS = CreateObject("ADODB.Recordset")
     LMultiByte = LenB(MultiByte)
     If LMultiByte>0 Then
         RS.Fields.Append "mBinary", adLongVarBinary, LMultiByte
         RS.Open
         RS.AddNew
-        RS("mBinary").AppendChunk MultiByte & ChrB(0)
+        RS("mBinary").AppendChunk MultiByte & ChrB(0)  'ASCII 0 => Null
         RS.Update
         Binary = RS("mBinary").GetChunk(LMultiByte)
     End If
