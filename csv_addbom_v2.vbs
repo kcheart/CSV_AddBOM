@@ -19,13 +19,15 @@ fIn.Open
 fIn.LoadFromFile sFilename
 
  
-sBOM = fBOM.Read(5)
+sBOM = fIn.Read(5)
 ' UTF8 BOM is 0xEF,0xBB,0xBF (decimal 239, 187, 191)
 If AscB(MidB(sBOM, 1, 1)) = 239 _
 And AscB(MidB(sBOM, 2, 1)) = 187 _
 And AscB(MidB(sBOM, 3, 1)) = 191 Then
 
+MsgBox "UTF-8-BOM check: The input file has BOM already."
 
+Else
     fIn.Position = 0
 
     Set fOut = CreateObject("adodb.stream")
@@ -36,7 +38,9 @@ And AscB(MidB(sBOM, 3, 1)) = 191 Then
     DIM sT, sB
     sT = chrB(239) & chrB(187) & chrB(191)
     sB = MultiByteToBinary(sT)
-    fOut.Write sB
+    fOut.Write sB    'Add UTF8_BOM
+    
+    fIn.CopyTo fOut
      
     fOut.SaveToFile "out1.csv", 2
     fOut.Flush
